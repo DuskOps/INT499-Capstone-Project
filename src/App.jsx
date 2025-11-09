@@ -1,0 +1,84 @@
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+} from "react-router-dom";
+
+import StreamList from "./components/StreamList";
+import Movies from "./components/Movies";
+import Cart from "./components/Cart";
+import About from "./components/About";
+
+import eztechLogo from "./assets/eztechmovie_navlogo.png";
+import "./App.css";
+
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <nav className="navbar">
+          {/* Left: Logo + Nav menu grouped */}
+          <div className="navbar-left">
+            <img
+              src={eztechLogo}
+              alt="EZTechMovie Video Streaming"
+              className="logo-img"
+            />
+
+            <div className="nav-links">
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  "nav-link" + (isActive ? " active" : "")
+                }
+              >
+                StreamList
+              </NavLink>
+
+              <NavLink
+                to="/movies"
+                className={({ isActive }) =>
+                  "nav-link" + (isActive ? " active" : "")
+                }
+              >
+                Movies
+              </NavLink>
+
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  "nav-link" + (isActive ? " active" : "")
+                }
+              >
+                Cart
+              </NavLink>
+
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  "nav-link" + (isActive ? " active" : "")
+                }
+              >
+                About
+              </NavLink>
+            </div>
+          </div>
+        </nav>
+
+        <main className="content">
+          <Routes>
+            <Route path="/" element={<StreamList />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
+  );
+}
+
+export default App;

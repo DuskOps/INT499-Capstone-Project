@@ -1,0 +1,16 @@
+.page-movies {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Reuse common styles via class names already defined in StreamList.css:
+   .page-title and .page-subtitle are shared */
+
+.page-movies .page-title {
+  /* Optional: if you want a slight variation */
+}
+
+.page-movies .page-subtitle {
+  line-height: 1.6;
+  color: #cccccc;
+}

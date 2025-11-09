@@ -1,0 +1,92 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #0b0b0b;
+  color: #ffffff;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+
+  background-color: #151515; /* navbar background */
+  border-top: 4px solid #666666; /* gray top border */
+  border-bottom: 2px solid #c8142f; /* red accent line */
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.8);
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Group: logo + nav links */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* space between logo and menu */
+}
+
+/* Logo */
+.logo-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  filter: none;
+  transition: none;
+}
+
+.logo-img:hover {
+  transform: none;
+  filter: none;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-link {
+  position: relative;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  color: #cccccc;
+  text-transform: uppercase;
+  padding-bottom: 0.15rem;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #ffd700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.7);
+}
+
+.nav-link.active {
+  color: #ffd700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.9), 0 0 12px rgba(200, 20, 47, 0.6);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15rem;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #0046ad, #c8142f);
+  border-radius: 3px;
+}
+
+/* Page content area */
+.content {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}

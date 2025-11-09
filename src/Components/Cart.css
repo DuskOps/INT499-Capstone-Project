@@ -1,0 +1,11 @@
+.page-cart {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Uses shared .page-title and .page-subtitle styles */
+
+.page-cart .page-subtitle {
+  line-height: 1.6;
+  color: #cccccc;
+}

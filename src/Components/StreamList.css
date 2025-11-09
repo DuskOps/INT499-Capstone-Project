@@ -1,0 +1,149 @@
+.streamlist-page {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.streamlist-page h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.25rem;
+  color: #ffd700;
+  text-transform: uppercase;
+}
+
+.streamlist-subtitle {
+  color: #cccccc;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Form */
+.streamlist-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.streamlist-input {
+  flex: 1;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #333333;
+  background-color: #0b0b0b;
+  color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.streamlist-input::placeholder {
+  color: #6f6f6f;
+}
+
+.streamlist-input:focus {
+  background-color: #111111;
+  border-color: #0046ad;
+  box-shadow: 0 0 8px rgba(0, 70, 173, 0.7);
+}
+
+/* Add button */
+.streamlist-button {
+  padding: 0.65rem 1.6rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
+  color: #ffffff;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+  white-space: nowrap;
+}
+
+.streamlist-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  filter: brightness(1.05);
+}
+
+.streamlist-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 6px rgba(200, 20, 47, 0.6);
+}
+
+/* List */
+.streamlist-display {
+  margin-top: 0.5rem;
+  padding: 0;
+}
+
+.streamlist-empty {
+  padding: 0.7rem 0.8rem;
+  color: #777777;
+  font-style: italic;
+}
+
+/* Items */
+.streamlist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.45rem;
+  border-radius: 8px;
+  background-color: #151515;
+  border: 1px solid #262626;
+  cursor: grab;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.streamlist-item:hover {
+  background-color: #1e1e1e;
+  border-color: #0046ad;
+  box-shadow: 0 0 10px rgba(0, 70, 173, 0.45);
+}
+
+.streamlist-item:active {
+  cursor: grabbing;
+  transform: scale(0.99);
+}
+
+.streamlist-item-text {
+  flex: 1;
+  color: #ffffff;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+/* Delete button */
+.streamlist-delete-button {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #c8142f;
+  color: #ffffff;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+.streamlist-delete-button:hover {
+  background-color: #ff3b3b;
+  box-shadow: 0 0 10px rgba(255, 59, 59, 0.6);
+  transform: translateY(-1px);
+}
+
+.streamlist-delete-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 5px rgba(255, 59, 59, 0.4);
+}
