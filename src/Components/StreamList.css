@@ -1,149 +1,67 @@
-.streamlist-page {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.streamlist-page h2 {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 2.4rem;
-  letter-spacing: 2px;
-  margin-bottom: 0.25rem;
-  color: #ffd700;
-  text-transform: uppercase;
-}
-
-.streamlist-subtitle {
+/* icon button reset */
+.icon-btn {
+  border: none;
+  background: transparent;
   color: #cccccc;
-  font-size: 0.95rem;
-  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  transition: color 0.2s ease, transform 0.1s ease;
 }
 
-/* Form */
-.streamlist-form {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+.icon-btn:hover {
+  color: #ffd700;
+}
+.icon-btn:active {
+  transform: scale(0.96);
 }
 
-.streamlist-input {
-  flex: 1;
-  padding: 0.65rem 0.8rem;
-  font-size: 0.95rem;
+/* align main row */
+.streamlist-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 0.6rem;
+}
+
+/* completed state */
+.streamlist-item.is-complete .streamlist-item-text {
+  color: #9aa0a6;
+  text-decoration: line-through;
+}
+
+/* edit input */
+.edit-input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
   border-radius: 6px;
   border: 1px solid #333333;
-  background-color: #0b0b0b;
+  background: #0b0b0b;
   color: #ffffff;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease,
-    background-color 0.2s ease;
 }
 
-.streamlist-input::placeholder {
-  color: #6f6f6f;
+.actions {
+  display: inline-flex;
+  gap: 0.25rem;
 }
 
-.streamlist-input:focus {
-  background-color: #111111;
-  border-color: #0046ad;
-  box-shadow: 0 0 8px rgba(0, 70, 173, 0.7);
+/* optional accent overrides per action */
+.complete-btn {
+  color: #8ab4f8;
 }
-
-/* Add button */
-.streamlist-button {
-  padding: 0.65rem 1.6rem;
-  font-size: 0.95rem;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
-  color: #ffffff;
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
-  white-space: nowrap;
+.edit-btn {
+  color: #8ab4f8;
 }
-
-.streamlist-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
-  filter: brightness(1.05);
+.save-btn {
+  color: #00c853;
 }
-
-.streamlist-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 0 6px rgba(200, 20, 47, 0.6);
+.cancel-btn {
+  color: #ff7043;
 }
-
-/* List */
-.streamlist-display {
-  margin-top: 0.5rem;
-  padding: 0;
-}
-
-.streamlist-empty {
-  padding: 0.7rem 0.8rem;
-  color: #777777;
-  font-style: italic;
-}
-
-/* Items */
-.streamlist-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.7rem 0.9rem;
-  margin-bottom: 0.45rem;
-  border-radius: 8px;
-  background-color: #151515;
-  border: 1px solid #262626;
-  cursor: grab;
-  transition: background-color 0.2s ease, border-color 0.2s ease,
-    box-shadow 0.2s ease, transform 0.1s ease;
-}
-
-.streamlist-item:hover {
-  background-color: #1e1e1e;
-  border-color: #0046ad;
-  box-shadow: 0 0 10px rgba(0, 70, 173, 0.45);
-}
-
-.streamlist-item:active {
-  cursor: grabbing;
-  transform: scale(0.99);
-}
-
-.streamlist-item-text {
-  flex: 1;
-  color: #ffffff;
-  font-size: 0.95rem;
-  word-break: break-word;
-}
-
-/* Delete button */
-.streamlist-delete-button {
-  padding: 0.35rem 0.8rem;
-  font-size: 0.8rem;
-  border: none;
-  border-radius: 6px;
-  background-color: #c8142f;
-  color: #ffffff;
-  font-family: "Rajdhani", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.15s ease, box-shadow 0.15s ease,
-    transform 0.1s ease;
-}
-
-.streamlist-delete-button:hover {
-  background-color: #ff3b3b;
-  box-shadow: 0 0 10px rgba(255, 59, 59, 0.6);
-  transform: translateY(-1px);
-}
-
-.streamlist-delete-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 0 5px rgba(255, 59, 59, 0.4);
+.delete-btn {
+  color: #c8142f;
 }
