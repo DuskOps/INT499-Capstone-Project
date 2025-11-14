@@ -19,49 +19,20 @@ function App() {
     <Router>
       <div className="App">
         <nav className="navbar">
-          {/* Left: Logo + Nav menu grouped */}
           <div className="navbar-left">
-            <img
-              src={eztechLogo}
-              alt="EZTechMovie Video Streaming"
-              className="logo-img"
-            />
+            <img src={eztechLogo} alt="EZTech Logo" className="logo-img" />
 
             <div className="nav-links">
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) =>
-                  "nav-link" + (isActive ? " active" : "")
-                }
-              >
+              <NavLink to="/" end className="nav-link">
                 StreamList
               </NavLink>
-
-              <NavLink
-                to="/movies"
-                className={({ isActive }) =>
-                  "nav-link" + (isActive ? " active" : "")
-                }
-              >
+              <NavLink to="/movies" className="nav-link">
                 Movies
               </NavLink>
-
-              <NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  "nav-link" + (isActive ? " active" : "")
-                }
-              >
+              <NavLink to="/cart" className="nav-link">
                 Cart
               </NavLink>
-
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  "nav-link" + (isActive ? " active" : "")
-                }
-              >
+              <NavLink to="/about" className="nav-link">
                 About
               </NavLink>
             </div>

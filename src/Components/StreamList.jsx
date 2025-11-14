@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import {
-  FaTrash,
-  FaEdit,
   FaCheck,
   FaTimes,
   FaRegCheckCircle,
   FaRegCircle,
+  FaPencilAlt,
 } from "react-icons/fa";
 import "./StreamList.css";
 
 function StreamList() {
+  // main text input value
   const [inputValue, setInputValue] = useState("");
+  // list items
   const [items, setItems] = useState([]);
+  // index used for drag-and-drop
   const [draggedIndex, setDraggedIndex] = useState(null);
 
   useEffect(() => {
@@ -23,19 +25,19 @@ function StreamList() {
     const trimmed = inputValue.trim();
     if (!trimmed) return;
 
-    console.log("User Input:", trimmed);
-
     setItems((prev) => [
       ...prev,
       {
-        id: Date.now() + Math.random(),
+        id: Date.now(),
         title: trimmed,
         completed: false,
         isEditing: false,
+        draft: trimmed,
       },
     ]);
 
-    setInputValue(""); // clear after submit
+    // clear input after submit
+    setInputValue("");
   };
 
   const handleDelete = (id) => {
@@ -44,69 +46,64 @@ function StreamList() {
 
   const toggleComplete = (id) => {
     setItems((prev) =>
-      prev.map((it) =>
-        it.id === id ? { ...it, completed: !it.completed } : it
+      prev.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
       )
     );
   };
 
   const startEdit = (id) => {
     setItems((prev) =>
-      prev.map((it) =>
-        it.id === id ? { ...it, isEditing: true, draft: it.title } : it
+      prev.map((item) =>
+        item.id === id ? { ...item, isEditing: true, draft: item.title } : item
       )
     );
   };
 
   const updateDraft = (id, value) => {
     setItems((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, draft: value } : it))
+      prev.map((item) => (item.id === id ? { ...item, draft: value } : item))
     );
   };
 
   const saveEdit = (id) => {
     setItems((prev) =>
-      prev.map((it) =>
-        it.id === id
+      prev.map((item) =>
+        item.id === id
           ? {
-              ...it,
-              title: (it.draft || "").trim() || it.title,
+              ...item,
+              title: item.draft.trim() || item.title,
               isEditing: false,
-              draft: undefined,
             }
-          : it
+          : item
       )
     );
   };
 
-  const cancelEdit = (id) => {
-    setItems((prev) =>
-      prev.map((it) =>
-        it.id === id ? { ...it, isEditing: false, draft: undefined } : it
-      )
-    );
-  };
-
-  // Drag & Drop
+  // drag & drop
   const handleDragStart = (index) => setDraggedIndex(index);
+
   const handleDragOver = (e) => e.preventDefault();
+
   const handleDrop = (index) => {
     if (draggedIndex === null || draggedIndex === index) return;
+
     setItems((prev) => {
       const updated = [...prev];
       const [moved] = updated.splice(draggedIndex, 1);
       updated.splice(index, 0, moved);
       return updated;
     });
+
     setDraggedIndex(null);
   };
 
   return (
     <div className="page page-streamlist">
-      <h2 className="page-title">StreamList</h2>
+      <h2 className="page-title">Streamlist</h2>
       <p className="page-subtitle">
-        Add shows or movies, mark complete, edit titles, drag to reorder, or
-        remove them.
+        Add shows or movies, click and drag to reorder, mark them complete, or
+        edit them using the pencil icon on the right.
       </p>
 
       <form onSubmit={handleSubmit} className="streamlist-form">
@@ -125,7 +122,7 @@ function StreamList() {
       <ul className="streamlist-display">
         {items.length === 0 && (
           <li className="streamlist-empty">
-            Your list is empty. Start adding titles.
+            Your list is empty. Start adding your favorite titles.
           </li>
         )}
 
@@ -138,74 +135,77 @@ function StreamList() {
             onDragOver={handleDragOver}
             onDrop={() => handleDrop(index)}
           >
-            {/* Complete toggle */}
-            <button
-              type="button"
-              className="icon-btn complete-btn"
-              onClick={() => toggleComplete(item.id)}
-              aria-label={
-                item.completed ? "Mark as incomplete" : "Mark as complete"
-              }
-              title={item.completed ? "Mark as incomplete" : "Mark as complete"}
-            >
-              {item.completed ? <FaRegCheckCircle /> : <FaRegCircle />}
-            </button>
+            {/* left side: index + title / edit field */}
+            <div className="streamlist-left">
+              <span className="streamlist-index">{index + 1}.</span>
 
-            {/* Title / Edit field */}
-            <div className="streamlist-item-main">
               {item.isEditing ? (
                 <input
                   className="edit-input"
-                  value={item.draft ?? ""}
+                  value={item.draft}
                   onChange={(e) => updateDraft(item.id, e.target.value)}
                   autoFocus
                 />
               ) : (
-                <span className="streamlist-item-text">
-                  {index + 1}. {item.title}
-                </span>
+                <span className="streamlist-item-text">{item.title}</span>
               )}
             </div>
 
-            {/* Actions: Edit/Save/Cancel + Delete */}
-            <div className="actions">
+            {/* right side: actions */}
+            <div className="streamlist-actions">
               {item.isEditing ? (
                 <>
+                  {/* Save changes */}
                   <button
                     type="button"
                     className="icon-btn save-btn"
                     onClick={() => saveEdit(item.id)}
-                    title="Save"
+                    title="Save changes"
                   >
                     <FaCheck />
                   </button>
+
+                  {/* Delete item */}
                   <button
                     type="button"
-                    className="icon-btn cancel-btn"
-                    onClick={() => cancelEdit(item.id)}
-                    title="Cancel"
+                    className="delete-pill"
+                    onClick={() => handleDelete(item.id)}
+                    title="Delete item"
                   >
-                    <FaTimes />
+                    <FaTimes className="delete-x-icon" />
                   </button>
                 </>
               ) : (
-                <button
-                  type="button"
-                  className="icon-btn edit-btn"
-                  onClick={() => startEdit(item.id)}
-                  title="Edit"
-                >
-                  <FaEdit />
-                </button>
+                <>
+                  {/* Complete toggle */}
+                  <button
+                    type="button"
+                    className="icon-btn complete-btn"
+                    onClick={() => toggleComplete(item.id)}
+                    title={
+                      item.completed
+                        ? "Mark as not watched yet"
+                        : "Mark as complete"
+                    }
+                  >
+                    {item.completed ? (
+                      <FaRegCheckCircle className="complete-icon-green" />
+                    ) : (
+                      <FaRegCircle />
+                    )}
+                  </button>
+
+                  {/* Edit (pencil) */}
+                  <button
+                    type="button"
+                    className="icon-btn edit-pencil-btn"
+                    onClick={() => startEdit(item.id)}
+                    title="Edit title"
+                  >
+                    <FaPencilAlt />
+                  </button>
+                </>
               )}
-              <button
-                type="button"
-                className="icon-btn delete-btn"
-                onClick={() => handleDelete(item.id)}
-                title="Delete"
-              >
-                <FaTrash />
-              </button>
             </div>
           </li>
         ))}
