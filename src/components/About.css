@@ -1,0 +1,11 @@
+.page-about {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Uses shared .page-title and .page-subtitle styles */
+
+.page-about .page-subtitle {
+  line-height: 1.6;
+  color: #cccccc;
+}

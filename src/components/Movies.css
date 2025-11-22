@@ -1,0 +1,317 @@
+/* Overall page width matches your main content area */
+.page-movies {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+
+/* Title in content area */
+.movies-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Panel that holds the description + search bar */
+.movies-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Text box with description and instructions */
+.movies-description-box {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 0.75rem;
+  margin-bottom: 1.75rem;
+
+  border: 1px solid #444444;
+  border-radius: 4px;
+  background-color: #080808;
+
+  padding: 1rem 1.25rem;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* ===========================
+   SEARCH BAR + AUTOCOMPLETE
+   =========================== */
+
+/* Centers the search row and controls its max width */
+.movies-search-form {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 2.25rem auto;
+}
+
+/* Row: input (with dropdown) + button */
+.movies-search-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+/* Container for input + dropdown */
+.movies-autocomplete {
+  position: relative;
+  flex: 1;
+}
+
+/* Long horizontal input */
+.movies-search-input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+
+  border-radius: 4px;
+  border: 1px solid #222222;
+  background-color: #050505;
+  color: #ffffff;
+
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.movies-search-input::placeholder {
+  color: #666666;
+}
+
+.movies-search-input:focus {
+  background-color: #070707;
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+
+/* Search button styled like your StreamList ADD button */
+.movies-search-button {
+  padding: 0.65rem 1.6rem;
+  font-size: 0.9rem;
+
+  border: none;
+  border-radius: 4px;
+
+  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
+  color: #ffffff;
+
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+}
+
+.movies-search-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.45);
+  filter: brightness(1.05);
+}
+
+.movies-search-button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* Autocomplete dropdown */
+.movies-suggestions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.25rem);
+  z-index: 20;
+
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+
+  background-color: #050505;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.movies-suggestion-item {
+  padding: 0.4rem 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.movies-suggestion-item:hover {
+  background-color: #151515;
+}
+
+.movies-suggestion-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movies-suggestion-year {
+  font-size: 0.8rem;
+  color: #aaaaaa;
+}
+
+/* ===========================
+   STATUS / LOADING
+   =========================== */
+
+.movies-status-text {
+  margin-top: 0.25rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+  color: #aaaaaa;
+  font-size: 0.92rem;
+}
+
+.movies-error-text {
+  color: #ff6b6b;
+}
+
+.movies-loading {
+  margin-top: 1.2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #dddddd;
+  font-size: 0.95rem;
+}
+
+.movies-spinner {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: #ffcc00;
+  animation: movies-spin 0.8s linear infinite;
+}
+
+@keyframes movies-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===========================
+   MOVIE GRID
+   =========================== */
+
+/* 4 movies per row on desktop, like a rental shelf */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+/* Responsive tweaks so phones don’t break */
+@media (max-width: 1100px) {
+  .movies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 820px) {
+  .movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .movies-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* ===========================
+   MOVIE CARD
+   =========================== */
+
+.movie-card {
+  background-color: #101010;
+  border: 1px solid #222222;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  transition: transform 0.12s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-3px);
+  border-color: #ffcc00;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.35);
+}
+
+.movie-poster-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fallback if there is no poster */
+.movie-poster.placeholder {
+  color: #777777;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Title + metadata under poster, like "Movie Title" row in your wireframe */
+.movie-info {
+  padding: 0.65rem 0.8rem 0.85rem;
+}
+
+.movie-title {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.movie-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #b3b3b3;
+}
+
+.movie-rating {
+  background-color: #222222;
+  border-radius: 999px;
+  padding: 0.12rem 0.5rem;
+}

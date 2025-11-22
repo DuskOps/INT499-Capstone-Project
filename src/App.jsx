@@ -7,10 +7,9 @@ import {
 } from "react-router-dom";
 
 import StreamList from "./components/StreamList";
-import Movies from "./components/Movies";
+import Movies from "./Components/Movies";
 import Cart from "./components/Cart";
 import About from "./components/About";
-
 import eztechLogo from "./assets/eztechmovie_navlogo.png";
 import "./App.css";
 
