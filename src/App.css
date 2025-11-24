@@ -64,3 +64,21 @@
   max-width: 900px;
   margin: auto;
 }
+/* Cart badge in navbar */
+.nav-link-cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cart-count-badge {
+  min-width: 20px;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background-color: #c8142f;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+}

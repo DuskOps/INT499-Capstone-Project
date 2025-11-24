@@ -1,0 +1,143 @@
+.page-subscriptions {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+}
+
+.subs-intro {
+  margin-bottom: 1rem;
+  color: #cccccc;
+  font-size: 0.95rem;
+}
+
+.subs-warning {
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  background-color: #3b000b;
+  border: 1px solid #ff4b6a;
+  color: #ffd6de;
+  font-size: 0.9rem;
+}
+
+.subs-info-banner {
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  background-color: #101010;
+  border: 1px solid #444444;
+  color: #f1e28a;
+  font-size: 0.9rem;
+}
+
+/* Grid of cards */
+.subs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual card */
+.subs-card {
+  background-color: #101010;
+  border-radius: 6px;
+  border: 1px solid #222222;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.12s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.subs-card:hover {
+  transform: translateY(-3px);
+  border-color: #ffcc00;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+}
+
+.subs-card-img-wrapper {
+  width: 100%;
+  height: 160px;
+  background-color: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subs-card-img {
+  max-height: 140px;
+  width: auto;
+  object-fit: contain;
+}
+
+.subs-card-body {
+  padding: 0.75rem 0.85rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.subs-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.subs-card-title {
+  font-size: 1rem;
+}
+
+.subs-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background-color: #0046ad;
+  color: #ffffff;
+}
+
+.subs-badge.accessory {
+  background-color: #444444;
+}
+
+.subs-card-info {
+  font-size: 0.85rem;
+  color: #aaaaaa;
+}
+
+.subs-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+}
+
+.subs-card-price {
+  font-weight: 600;
+  color: #ffcc00;
+}
+
+.subs-add-btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  border: none;
+  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.18s ease;
+}
+
+.subs-add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+}
+
+.subs-add-btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
