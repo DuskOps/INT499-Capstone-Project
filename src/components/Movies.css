@@ -35,10 +35,6 @@
   text-align: center;
 }
 
-/* ===========================
-   SEARCH BAR + AUTOCOMPLETE
-   =========================== */
-
 /* Centers the search row and controls its max width */
 .movies-search-form {
   width: 100%;
@@ -167,10 +163,6 @@
   color: #aaaaaa;
 }
 
-/* ===========================
-   STATUS / LOADING
-   =========================== */
-
 .movies-status-text {
   margin-top: 0.25rem;
   margin-bottom: 1.75rem;
@@ -212,11 +204,7 @@
   }
 }
 
-/* ===========================
-   MOVIE GRID
-   =========================== */
-
-/* 4 movies per row on desktop, like a rental shelf */
+/* 4 movies per row on desktop */
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -243,10 +231,6 @@
     grid-template-columns: repeat(1, 1fr);
   }
 }
-
-/* ===========================
-   MOVIE CARD
-   =========================== */
 
 .movie-card {
   background-color: #101010;
@@ -292,7 +276,7 @@
   justify-content: center;
 }
 
-/* Title + metadata under poster, like "Movie Title" row in your wireframe */
+/* Title + metadata under poster */
 .movie-info {
   padding: 0.65rem 0.8rem 0.85rem;
 }

@@ -1,214 +1,232 @@
 import React, { useState, useEffect } from "react";
-import {
-  FaCheck,
-  FaTimes,
-  FaRegCheckCircle,
-  FaRegCircle,
-  FaPencilAlt,
-} from "react-icons/fa";
+import { FaCheck, FaPencilAlt } from "react-icons/fa";
 import "./StreamList.css";
 
+const LOCAL_KEY = "eztechmovie_streamlist";
+
 function StreamList() {
-  // main text input value
-  const [inputValue, setInputValue] = useState("");
-  // list items
-  const [items, setItems] = useState([]);
-  // index used for drag-and-drop
-  const [draggedIndex, setDraggedIndex] = useState(null);
+  const [items, setItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const [input, setInput] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState("");
+  const [draggingId, setDraggingId] = useState(null);
 
   useEffect(() => {
-    document.title = "StreamList - EZTechMovie";
-  }, []);
+    try {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(items));
+    } catch (err) {
+      console.warn("Failed to save stream list to localStorage:", err);
+    }
+  }, [items]);
 
-  const handleSubmit = (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
-    const trimmed = inputValue.trim();
-    if (!trimmed) return;
+    const text = input.trim();
+    if (!text) return;
 
-    setItems((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        title: trimmed,
-        completed: false,
-        isEditing: false,
-        draft: trimmed,
-      },
-    ]);
+    const newItem = {
+      id: Date.now(),
+      text,
+      complete: false,
+    };
 
-    // clear input after submit
-    setInputValue("");
-  };
-
-  const handleDelete = (id) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+    setItems((prev) => [...prev, newItem]);
+    setInput("");
   };
 
   const toggleComplete = (id) => {
     setItems((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item
+        item.id === id ? { ...item, complete: !item.complete } : item
       )
     );
   };
 
-  const startEdit = (id) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, isEditing: true, draft: item.title } : item
-      )
-    );
+  const deleteItem = (id) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const updateDraft = (id, value) => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, draft: value } : item))
-    );
+  const startEdit = (id, text) => {
+    setEditingId(id);
+    setEditText(text);
   };
 
   const saveEdit = (id) => {
+    const trimmed = editText.trim();
+    if (!trimmed) return; // do nothing if they try to save empty
+
     setItems((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              title: item.draft.trim() || item.title,
-              isEditing: false,
-            }
-          : item
-      )
+      prev.map((item) => (item.id === id ? { ...item, text: trimmed } : item))
     );
+    setEditingId(null);
+    setEditText("");
   };
 
-  // drag & drop
-  const handleDragStart = (index) => setDraggedIndex(index);
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditText("");
+  };
 
-  const handleDragOver = (e) => e.preventDefault();
+  // Keyboard handler for edit input: Enter = save, Esc = cancel
+  const handleEditKeyDown = (e, id) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      saveEdit(id);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      cancelEdit();
+    }
+  };
 
-  const handleDrop = (index) => {
-    if (draggedIndex === null || draggedIndex === index) return;
+  // Drag + Drop handlers
+  const handleDragStart = (e, id) => {
+    setDraggingId(id);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", String(id));
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, targetId) => {
+    e.preventDefault();
+    const sourceId = draggingId;
+    if (!sourceId || sourceId === targetId) return;
 
     setItems((prev) => {
-      const updated = [...prev];
-      const [moved] = updated.splice(draggedIndex, 1);
-      updated.splice(index, 0, moved);
-      return updated;
+      const newList = [...prev];
+      const fromIndex = newList.findIndex((i) => i.id === sourceId);
+      const toIndex = newList.findIndex((i) => i.id === targetId);
+      if (fromIndex === -1 || toIndex === -1) return prev;
+
+      const [moved] = newList.splice(fromIndex, 1);
+      newList.splice(toIndex, 0, moved);
+
+      return newList;
     });
 
-    setDraggedIndex(null);
+    setDraggingId(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggingId(null);
   };
 
   return (
     <div className="page page-streamlist">
-      <h2 className="page-title">Streamlist</h2>
-      <p className="page-subtitle">
-        Add shows or movies, click and drag to reorder, mark them complete, or
-        edit them using the pencil icon on the right.
-      </p>
+      <h2 className="streamlist-title">My Stream List</h2>
 
-      <form onSubmit={handleSubmit} className="streamlist-form">
+      <form className="streamlist-form" onSubmit={handleAdd}>
         <input
           type="text"
-          value={inputValue}
-          placeholder="Enter your show or movie"
-          onChange={(e) => setInputValue(e.target.value)}
           className="streamlist-input"
+          placeholder="Add shows or movies"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
-        <button type="submit" className="streamlist-button">
+
+        <button className="streamlist-button" type="submit">
           Add
         </button>
       </form>
 
+      {items.length === 0 && (
+        <p className="streamlist-empty">No items yet in stream list</p>
+      )}
+
       <ul className="streamlist-display">
-        {items.length === 0 && (
-          <li className="streamlist-empty">
-            Your list is empty. Start adding your favorite titles.
-          </li>
-        )}
+        {items.map((item, index) => {
+          const isEditing = editingId === item.id;
 
-        {items.map((item, index) => (
-          <li
-            key={item.id}
-            className={`streamlist-item ${item.completed ? "is-complete" : ""}`}
-            draggable
-            onDragStart={() => handleDragStart(index)}
-            onDragOver={handleDragOver}
-            onDrop={() => handleDrop(index)}
-          >
-            {/* left side: index + title / edit field */}
-            <div className="streamlist-left">
-              <span className="streamlist-index">{index + 1}.</span>
+          return (
+            <li
+              key={item.id}
+              className={`streamlist-item ${
+                item.complete ? "is-complete" : ""
+              }`}
+              draggable
+              onDragStart={(e) => handleDragStart(e, item.id)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, item.id)}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="streamlist-left">
+                <span className="streamlist-index">{index + 1}.</span>
 
-              {item.isEditing ? (
-                <input
-                  className="edit-input"
-                  value={item.draft}
-                  onChange={(e) => updateDraft(item.id, e.target.value)}
-                  autoFocus
-                />
-              ) : (
-                <span className="streamlist-item-text">{item.title}</span>
-              )}
-            </div>
+                {isEditing ? (
+                  <input
+                    className="edit-input"
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    onKeyDown={(e) => handleEditKeyDown(e, item.id)}
+                    autoFocus
+                  />
+                ) : (
+                  <span className="streamlist-item-text">{item.text}</span>
+                )}
+              </div>
 
-            {/* right side: actions */}
-            <div className="streamlist-actions">
-              {item.isEditing ? (
-                <>
-                  {/* Save changes */}
-                  <button
-                    type="button"
-                    className="icon-btn save-btn"
-                    onClick={() => saveEdit(item.id)}
-                    title="Save changes"
-                  >
-                    <FaCheck />
-                  </button>
+              <div className="streamlist-actions">
+                {isEditing ? (
+                  <>
+                    {/* Save (button) */}
+                    <button
+                      className="icon-btn save-btn"
+                      onClick={() => saveEdit(item.id)}
+                      title="Save"
+                      type="button"
+                    >
+                      <FaCheck />
+                    </button>
 
-                  {/* Delete item */}
-                  <button
-                    type="button"
-                    className="delete-pill"
-                    onClick={() => handleDelete(item.id)}
-                    title="Delete item"
-                  >
-                    <FaTimes className="delete-x-icon" />
-                  </button>
-                </>
-              ) : (
-                <>
-                  {/* Complete toggle */}
-                  <button
-                    type="button"
-                    className="icon-btn complete-btn"
-                    onClick={() => toggleComplete(item.id)}
-                    title={
-                      item.completed
-                        ? "Mark as not watched yet"
-                        : "Mark as complete"
-                    }
-                  >
-                    {item.completed ? (
-                      <FaRegCheckCircle className="complete-icon-green" />
-                    ) : (
-                      <FaRegCircle />
-                    )}
-                  </button>
+                    {/* Delete only while editing */}
+                    <button
+                      className="delete-pill"
+                      onClick={() => deleteItem(item.id)}
+                      title="Delete"
+                      type="button"
+                    >
+                      <span className="delete-x-icon">X</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* Complete only when not editing */}
+                    <button
+                      className={`icon-btn complete-btn ${
+                        item.complete ? "complete-icon-green" : ""
+                      }`}
+                      onClick={() => toggleComplete(item.id)}
+                      title="Complete"
+                      type="button"
+                    >
+                      <FaCheck />
+                    </button>
 
-                  {/* Edit (pencil) */}
-                  <button
-                    type="button"
-                    className="icon-btn edit-pencil-btn"
-                    onClick={() => startEdit(item.id)}
-                    title="Edit title"
-                  >
-                    <FaPencilAlt />
-                  </button>
-                </>
-              )}
-            </div>
-          </li>
-        ))}
+                    {/* Edit */}
+                    <button
+                      className="icon-btn edit-pencil-btn"
+                      onClick={() => startEdit(item.id, item.text)}
+                      title="Edit"
+                      type="button"
+                    >
+                      <FaPencilAlt />
+                    </button>
+                  </>
+                )}
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

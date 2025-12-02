@@ -10,10 +10,10 @@ import {
 import "./App.css";
 import eztechLogo from "./assets/eztechmovie_navlogo.png";
 
-import StreamList from "./Components/StreamList";
+import StreamList from "./components/StreamList";
 import Movies from "./Components/Movies";
 import Cart from "./components/Cart";
-import About from "./Components/About";
+import About from "./components/About";
 import Subscriptions from "./components/Subscriptions";
 
 import products from "./data";

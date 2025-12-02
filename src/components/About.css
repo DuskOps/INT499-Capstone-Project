@@ -1,11 +1,73 @@
 .page-about {
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 2rem 1rem;
+  color: #ffffff;
+  font-family: "Rajdhani", sans-serif;
 }
 
-/* Uses shared .page-title and .page-subtitle styles */
+.about-container {
+  background-color: #101010;
+  border: 1px solid #202020;
+  padding: 2rem;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.2);
+}
 
-.page-about .page-subtitle {
-  line-height: 1.6;
-  color: #cccccc;
+.about-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffcc00;
+  text-align: center;
+}
+
+.about-subtitle {
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffcc00; /* updated to yellow */
+}
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  margin-bottom: 1rem;
+  color: #dddddd;
+}
+
+.about-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.about-list li {
+  background-color: #151515;
+  border: 1px solid #252525;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #ffffff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.about-list li:hover {
+  background-color: #1c1c1c;
+  border-color: #ffcc00;
+}
+
+/* Add green checkmark before list items */
+.about-list li::before {
+  content: "✔";
+  color: #00e676; /* green */
+  font-weight: 700;
+  margin-right: 0.5rem;
 }

@@ -6,8 +6,6 @@
   color: #ffffff;
 }
 
-/* NAVBAR */
-
 .navbar {
   display: flex;
   align-items: center;
@@ -64,7 +62,7 @@
   max-width: 900px;
   margin: auto;
 }
-/* Cart badge in navbar */
+
 .nav-link-cart {
   position: relative;
   display: inline-flex;
