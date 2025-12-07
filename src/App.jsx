@@ -33,6 +33,10 @@ function App() {
     return [];
   });
 
+  // 🔹 PWA install prompt state
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
   // persist cart in localStorage
   useEffect(() => {
     try {
@@ -41,6 +45,51 @@ function App() {
       console.warn("Failed to save cart to localStorage:", err);
     }
   }, [cartItems]);
+
+  // 🔹 Listen for beforeinstallprompt + appinstalled
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      // Prevent the default mini-infobar
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    const handleAppInstalled = () => {
+      console.log("EZTechMovie StreamList installed as PWA");
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+      window.removeEventListener("appinstalled", handleAppInstalled);
+    };
+  }, []);
+
+  // 🔹 When user clicks the Install App button
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    try {
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log("User chose install outcome:", outcome);
+    } catch (err) {
+      console.warn("Install prompt error:", err);
+    }
+
+    // Once prompted, we can't reuse this event
+    setDeferredPrompt(null);
+    setIsInstallable(false);
+  };
 
   const totalCartCount = cartItems.reduce(
     (sum, item) => sum + item.quantity,
@@ -71,6 +120,19 @@ function App() {
                 About
               </NavLink>
             </div>
+          </div>
+
+          {/* 🔹 Right side: Install App button (only when installable) */}
+          <div className="navbar-right">
+            {isInstallable && (
+              <button
+                type="button"
+                className="install-app-button"
+                onClick={handleInstallClick}
+              >
+                Install App
+              </button>
+            )}
           </div>
         </nav>
 
