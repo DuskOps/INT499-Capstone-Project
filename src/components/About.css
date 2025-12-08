@@ -29,7 +29,7 @@
   margin-bottom: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #ffcc00; /* updated to yellow */
+  color: #ffcc00;
 }
 
 .about-text {
@@ -67,7 +67,7 @@
 /* Add green checkmark before list items */
 .about-list li::before {
   content: "✔";
-  color: #00e676; /* green */
+  color: #00e676;
   font-weight: 700;
   margin-right: 0.5rem;
 }

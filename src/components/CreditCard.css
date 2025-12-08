@@ -1,0 +1,87 @@
+/* src/components/CreditCard.css */
+.page-credit-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.credit-card-note {
+  color: #cccccc;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.credit-card-form {
+  background-color: #101010;
+  border: 1px solid #262626;
+  padding: 1.5rem;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: #ffcc00;
+}
+
+.form-row input {
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #333333;
+  background-color: #050505;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-row input::placeholder {
+  color: #666666;
+}
+
+.form-row input:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+}
+
+.form-row-inline {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.form-field-half {
+  flex: 1;
+}
+
+.credit-card-submit {
+  margin-top: 0.75rem;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: none;
+  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
+  color: #ffffff;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+}
+
+.credit-card-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.45);
+  filter: brightness(1.05);
+}
+
+.credit-card-status {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #ffcc00;
+}

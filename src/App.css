@@ -23,7 +23,7 @@
   gap: 1.5rem;
 }
 
-/* NEW: right side of navbar (for Install App button, etc.) */
+/* right side of navbar (for Install App button, etc.) 
 .navbar-right {
   display: flex;
   align-items: center;
@@ -86,8 +86,6 @@
   font-weight: 700;
   text-align: center;
 }
-
-/* NEW: Install App button styling */
 
 .install-app-button {
   padding: 0.4rem 1rem;

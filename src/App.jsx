@@ -5,20 +5,24 @@ import {
   Routes,
   Route,
   NavLink,
+  Navigate,
 } from "react-router-dom";
 
 import "./App.css";
 import eztechLogo from "./assets/eztechmovie_navlogo.png";
 
 import StreamList from "./components/StreamList";
-import Movies from "./Components/Movies";
+import Movies from "./components/Movies";
 import Cart from "./components/Cart";
 import About from "./components/About";
 import Subscriptions from "./components/Subscriptions";
+import CreditCard from "./components/CreditCard";
+import Login from "./components/Login";
 
 import products from "./data";
 
 const CART_STORAGE_KEY = "eztech_cart_items";
+const AUTH_STORAGE_KEY = "eztech_is_authenticated";
 
 function App() {
   const [cartItems, setCartItems] = useState(() => {
@@ -33,11 +37,21 @@ function App() {
     return [];
   });
 
-  // 🔹 PWA install prompt state
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      const saved = localStorage.getItem(AUTH_STORAGE_KEY);
+      if (saved === "true") return true;
+    } catch (err) {
+      console.warn("Failed to read auth from localStorage:", err);
+    }
+    return false;
+  });
+
+  // PWA install button state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
 
-  // persist cart in localStorage
+  // Persist cart
   useEffect(() => {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
@@ -46,10 +60,21 @@ function App() {
     }
   }, [cartItems]);
 
-  // 🔹 Listen for beforeinstallprompt + appinstalled
+  // Persist auth flag
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        AUTH_STORAGE_KEY,
+        isAuthenticated ? "true" : "false"
+      );
+    } catch (err) {
+      console.warn("Failed to save auth flag:", err);
+    }
+  }, [isAuthenticated]);
+
+  // beforeinstallprompt + appinstalled for PWA
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      // Prevent the default mini-infobar
       e.preventDefault();
       setDeferredPrompt(e);
       setIsInstallable(true);
@@ -73,7 +98,6 @@ function App() {
     };
   }, []);
 
-  // 🔹 When user clicks the Install App button
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
 
@@ -86,15 +110,31 @@ function App() {
       console.warn("Install prompt error:", err);
     }
 
-    // Once prompted, we can't reuse this event
     setDeferredPrompt(null);
     setIsInstallable(false);
+  };
+
+  // Google OAuth login success handler
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
   };
 
   const totalCartCount = cartItems.reduce(
     (sum, item) => sum + item.quantity,
     0
   );
+
+  // Wrapper to protect routes
+  function RequireAuth({ children }) {
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+    return children;
+  }
 
   return (
     <Router>
@@ -122,7 +162,6 @@ function App() {
             </div>
           </div>
 
-          {/* 🔹 Right side: Install App button (only when installable) */}
           <div className="navbar-right">
             {isInstallable && (
               <button
@@ -133,30 +172,84 @@ function App() {
                 Install App
               </button>
             )}
+
+            {isAuthenticated && (
+              <button
+                type="button"
+                className="install-app-button"
+                onClick={handleLogout}
+                style={{ marginLeft: "0.75rem" }}
+              >
+                Log Out
+              </button>
+            )}
           </div>
         </nav>
 
         <main className="content">
           <Routes>
-            <Route path="/" element={<StreamList />} />
-            <Route path="/movies" element={<Movies />} />
+            {/* Public route: login only */}
+            <Route
+              path="/login"
+              element={<Login onLoginSuccess={handleLoginSuccess} />}
+            />
+
+            {/* Protected routes: require login */}
+            <Route
+              path="/"
+              element={
+                <RequireAuth>
+                  <StreamList />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/movies"
+              element={
+                <RequireAuth>
+                  <Movies />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/subscriptions"
               element={
-                <Subscriptions
-                  products={products}
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                />
+                <RequireAuth>
+                  <Subscriptions
+                    products={products}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
+                </RequireAuth>
               }
             />
             <Route
               path="/cart"
               element={
-                <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                <RequireAuth>
+                  <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                </RequireAuth>
               }
             />
-            <Route path="/about" element={<About />} />
+            <Route
+              path="/checkout"
+              element={
+                <RequireAuth>
+                  <CreditCard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <RequireAuth>
+                  <About />
+                </RequireAuth>
+              }
+            />
+
+            {/* Fallback route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>

@@ -1,0 +1,54 @@
+/* src/components/Login.css */
+.page-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background-color: #101010;
+  border: 1px solid #262626;
+  padding: 2rem;
+  border-radius: 6px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
+}
+
+.login-title {
+  color: #ffcc00;
+  font-family: "Rajdhani", sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.login-text {
+  color: #dddddd;
+  margin-bottom: 1.5rem;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 4px;
+  border: none;
+  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
+  color: #ffffff;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.45);
+  filter: brightness(1.05);
+}
+
+.login-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #999999;
+}

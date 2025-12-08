@@ -29,7 +29,7 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Fetch event — network first, fallback to cache
+// Fetch event network first, fallback to cache
 self.addEventListener("fetch", (event) => {
   const request = event.request;
 

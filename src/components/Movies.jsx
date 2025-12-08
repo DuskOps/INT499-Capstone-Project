@@ -233,7 +233,7 @@ function Movies() {
         <p className="movies-status-text">No movies found for that title.</p>
       )}
 
-      {/* Movie posters row(s) under the search bar */}
+      {/* Movie posters rows under the search bar */}
       <div className="movies-grid">
         {results.map((movie) => {
           const posterUrl = movie.poster_path

@@ -1,8 +1,11 @@
 // src/Components/Cart.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
 function Cart({ cartItems, setCartItems }) {
+  const navigate = useNavigate();
+
   const handleRemove = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
@@ -138,6 +141,16 @@ function Cart({ cartItems, setCartItems }) {
       <div className="cart-total-row">
         <span className="cart-total-label">Total:</span>
         <span className="cart-total-value">${totalPrice.toFixed(2)}</span>
+      </div>
+
+      <div className="cart-checkout-row">
+        <button
+          type="button"
+          className="cart-checkout-button"
+          onClick={() => navigate("/checkout")}
+        >
+          Proceed to Checkout
+        </button>
       </div>
     </div>
   );

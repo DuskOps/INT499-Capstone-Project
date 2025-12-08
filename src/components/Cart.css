@@ -168,3 +168,27 @@
   color: #ffcc00;
   font-weight: 700;
 }
+.cart-checkout-row {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-checkout-button {
+  padding: 0.7rem 1.5rem;
+  border-radius: 4px;
+  border: none;
+  background: linear-gradient(90deg, #0046ad 0%, #c8142f 100%);
+  color: #ffffff;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+}
+
+.cart-checkout-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.45);
+  filter: brightness(1.05);
+}
